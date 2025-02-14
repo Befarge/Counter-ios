@@ -9,8 +9,7 @@ import UIKit
 
 extension UITextView {
     func appendString(text: String) {
-        self.text += text
-        self.scrollRangeToVisible(NSRange(location: self.text.count-1, length: 0))
+        self.text = text + self.text
     }
 }
 
@@ -26,37 +25,36 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func plusButton() {
         //check on max value
         guard count != Int.max else {
-            historyTextView.appendString(text: "\n\(currentData) попытка увеличить значение счётчика выше максимума\n")
+            historyTextView.appendString(text: "\(currentData) попытка увеличить значение счётчика выше максимума\n\n")
             return
         }
         
         count += 1
         counterLabel.text = String(count)
-        historyTextView.appendString(text: "\n\(currentData) значение изменено на +1\n")
+        historyTextView.appendString(text: "\(currentData) значение изменено на +1\n\n")
     }
     
     @IBAction func minusButton() {
         //check on min value
         guard count != 0 else {
-            historyTextView.appendString(text: "\n\(currentData) попытка уменьшить значение счётчика ниже 0\n")
+            historyTextView.appendString(text: "\(currentData) попытка уменьшить значение счётчика ниже 0\n\n")
             return
         }
         
         count -= 1
         counterLabel.text = String(count)
-        historyTextView.appendString(text: "\n\(currentData) значение изменено на -1\n")
+        historyTextView.appendString(text: "\(currentData) значение изменено на -1\n\n")
     }
     
     @IBAction func resetButton() {
         count = 0
         counterLabel.text = String(count)
-        historyTextView.appendString(text: "\n\(currentData) значение сброшено\n")
+        historyTextView.appendString(text: "\(currentData) значение сброшено\n\n")
     }
     
 }
