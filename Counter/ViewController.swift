@@ -7,6 +7,13 @@
 
 import UIKit
 
+extension UITextView {
+    func appendString(text: String) {
+        self.text += text
+        self.scrollRangeToVisible(NSRange(location: self.text.count-1, length: 0))
+    }
+}
+
 class ViewController: UIViewController {
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var historyTextView: UITextView!
@@ -25,33 +32,34 @@ class ViewController: UIViewController {
     @IBAction func plusButton() {
         //check on max value
         guard count != Int.max else {
-            historyTextView.text += "\n\(currentData) попытка увеличить значение счётчика выше максимума"
+            historyTextView.appendString(text: "\n\(currentData) попытка увеличить значение счётчика выше максимума\n")
             return
         }
         
         count += 1
         counterLabel.text = String(count)
-        historyTextView.text += "\n\(currentData) значение изменено на +1"
+        historyTextView.appendString(text: "\n\(currentData) значение изменено на +1\n")
     }
     
     @IBAction func minusButton() {
         //check on min value
         guard count != 0 else {
-            historyTextView.text += "\n\(currentData) попытка уменьшить значение счётчика ниже 0"
+            historyTextView.appendString(text: "\n\(currentData) попытка уменьшить значение счётчика ниже 0\n")
             return
         }
         
         count -= 1
         counterLabel.text = String(count)
-        historyTextView.text += "\n\(currentData) значение изменено на -1"
+        historyTextView.appendString(text: "\n\(currentData) значение изменено на -1\n")
     }
     
     @IBAction func resetButton() {
         count = 0
         counterLabel.text = String(count)
-        historyTextView.text += "\n\(currentData) значение сброшено"
+        historyTextView.appendString(text: "\n\(currentData) значение сброшено\n")
     }
     
 }
 
 
+ 
