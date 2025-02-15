@@ -13,15 +13,20 @@ extension UITextView {
     }
 }
 
+
 class ViewController: UIViewController {
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var historyTextView: UITextView!
     private var currentData: String {
         let formatterDate = DateFormatter()
-        formatterDate.dateFormat = "dd.MM.YYYY HH:mm"
+        formatterDate.dateFormat = "[dd.MM.YYYY HH:mm]:"
         return formatterDate.string(from: Date())
     }
-    private var count: Int = 0
+    private var count: Int = 0 {
+        willSet(newValue) {
+            counterLabel.text = "Значение счётчика:\n\n\(newValue)"
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +40,6 @@ class ViewController: UIViewController {
         }
         
         count += 1
-        counterLabel.text = String(count)
         historyTextView.appendString(text: "\(currentData) значение изменено на +1\n\n")
     }
     
@@ -47,13 +51,11 @@ class ViewController: UIViewController {
         }
         
         count -= 1
-        counterLabel.text = String(count)
         historyTextView.appendString(text: "\(currentData) значение изменено на -1\n\n")
     }
     
     @IBAction func resetButton() {
         count = 0
-        counterLabel.text = String(count)
         historyTextView.appendString(text: "\(currentData) значение сброшено\n\n")
     }
     
